@@ -1,0 +1,9 @@
+.app h1 {
+    text-align: center;
+}
+
+.app {
+    margin: 0 100px;
+    background-color: #EEE;
+    min-height: 100vh;
+}
