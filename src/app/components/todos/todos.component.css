@@ -102,3 +102,57 @@
 	font-size: 18px;
 	font-weight: 700;
 }
+
+
+.themeselector {
+  display: flex;
+  padding: 15px 60px;
+  width: 100%;
+}
+
+.theme {
+  flex: 1 1 20px;
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  background: gray;
+  margin: 10px;
+  padding: 30px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.bouldering {
+  background-image: url(https://images.pexels.com/photos/8454450/pexels-photo-8454450.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+}
+
+.swimming {
+  background-image: url(https://images.pexels.com/photos/1298684/pexels-photo-1298684.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+}
+
+.summer {
+  background-image: url(https://images.pexels.com/photos/1337825/pexels-photo-1337825.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+}
+
+.ice {
+  background-image: url(https://images.pexels.com/photos/813872/pexels-photo-813872.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+}
+
+
+.double-razor {
+  align-items: center;
+  padding: 50px 30%;
+  margin: 1em -1em;
+  display: flex;  
+}
+
+
+.double-razor:before, .double-razor:after {
+  height: 3px;
+  box-shadow: 0 -1px 0 black, 0 1px 0 black;
+  border-width: 0;
+  margin: 0 1em;
+  content: "";
+  flex: 1;
+}

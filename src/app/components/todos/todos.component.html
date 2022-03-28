@@ -6,6 +6,15 @@
         class = "todo-input" [(ngModel)] = "inputTodo">
         <input type="submit" class="button-62 todo-submit" value="Add">
     </form>
+
+    <h2 style="text-align: center">Pick your theme</h2>
+    <div class="themeselector">
+        <button class="bouldering theme" (click)="switchTheme('Bouldering')">Bouldering</button>
+        <button class="swimming theme " (click)="switchTheme('Swimming')">Swimming</button>
+        <button class="ice theme" (click)="switchTheme('Ice')">Ice</button>
+        <button class="summer theme" (click)="switchTheme('Summer')">Summer</button>
+    </div>
+    <h2 class="double-razor">Your todos</h2>
     <div *ngFor="let todo of todos; let i = index;" 
     class="todo {{(todo.completed ? 'done' : '')}}"
     style="background-image: url('{{todo.bg}}')">
