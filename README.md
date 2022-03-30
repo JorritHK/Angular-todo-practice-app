@@ -1,4 +1,42 @@
-# FirstAngularApp
+# Angular practice
+
+This project contains a rather basic webapp featuring a todo list which users can interact with.
+This is broken up into a few different sections:
+
+1. Frontend application using Angular 13.0.0
+2. MongoDB database from Dockerimage <version 5.0.6> and MongoExpress to be able to visualise the database
+3. Custom NodeJS REST API to handle traffic to database
+
+## How to run
+
+To run MongoDB and MongoExpress execute:
+
+    docker-compose -f Database/docker-compose.yaml up
+
+Initialize API:
+
+    node API/API.js
+
+Start the angular development server and open window at `localhost:4200`:
+  
+    ng serve -o
+
+## Future work
+I intend to also dockerize the Angular service and the API so everything is package neatly.
+Apart from that I would like to add more functionality like:
+1. logins
+2. generating images based on the text entered
+3. goals and rewards
+
+Cool climbing image, because climbing is life:
+
+![A cool image](https://media.istockphoto.com/photos/female-rock-climber-in-margalef-catalonia-spain-picture-id622956050?k=20&m=622956050&s=612x612&w=0&h=PfX5ycyZq15EM3NtlH-LI5AFyFjikN4AyL0NJ0UTIJ8=)
+
+
+
+
+
+# Angular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
 
