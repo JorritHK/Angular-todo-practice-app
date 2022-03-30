@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {CrudService} from './../../service/crud.service'
 import { Todo} from './../../models/Todos';
 import { createClient } from 'pexels';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -16,21 +18,28 @@ export class TodosComponent implements OnInit {
   inputTodo: string = "";
   client: any = 0;
   theme: string = 'Bouldering'
+  dbtodos: any;
+  
 
-  constructor() { }
+  constructor( private crudService: CrudService) { }
 
   ngOnInit(): void {
 
+    // Client to interact with Pexels
     this.client = createClient('563492ad6f91700001000001a1f48476c71c47b3adc6eeccd98ed26e');
 
-    this.todos = [
-      {
-        content: 'Iron shirts', completed: false, bg: 'https://media.istockphoto.com/photos/landscape-with-milky-way-and-silhouette-of-a-happy-man-picture-id518777140?k=20&m=518777140&s=612x612&w=0&h=2hsZ3-gJg9rHab94d5vUXx5tH4pu8U7NdOr0ETFJa2Q='
-      },
-      {
-        content: 'Shop groceries', completed: true, bg: 'https://images.pexels.com/photos/906093/pexels-photo-906093.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+    this.crudService.GetTodos().subscribe(res => {
+      console.log(res);
+      const received: Todo[] = JSON.parse(JSON.stringify(res));
+      for (const key in received) {
+        if (Object.prototype.hasOwnProperty.call(received, key)) {
+          const t = received[key];
+          this.todos.push(t);
+          console.log(this.todos);
+          
+        }
       }
-    ];
+    })
     this.updateBackgrounds();
   }
 
@@ -55,14 +64,12 @@ export class TodosComponent implements OnInit {
       this.images = [];
       for (var p of photos['photos']) {
         this.images.push(p['src']['landscape']);
-        console.log(this.images);
-        console.log(this.images[0]);
       }
       for (const todo of this.todos) {
-        console.log(todo['content']);
         todo['bg'] = this.images.pop();
-        console.log(todo['bg']);
       }
+    }).catch((error: Error) => {
+      console.error(error);
     });
     
   }
@@ -74,23 +81,44 @@ export class TodosComponent implements OnInit {
     this.updateBackgrounds();
   }
 
-
-
   toggleDone (id: number): void {
-    this.todos.map((v, i) => {
-      if (i == id) {v.completed = !v.completed};
-      return v;})
+    const updateObserve: Observable<any> = this.crudService.updateTodo(this.todos[id]._id, {completed: !this.todos[id].completed})
+    
+    updateObserve.subscribe(res => {
+      console.log(`Toggling completed for todo ${id}\n Result:`);
+      console.log(res);
+
+      // Also toggling in state
+      this.todos.map((v, i) => {
+        if (i == id) v.completed = !v.completed
+        return v;
+        })
+    })
   }
 
   deleteTodo(id: number): void {
 
-    this.todos = this.todos.filter((v, i) => i !== id);
+    // Remove todo id by accessing the _id (db_id)
+    this.crudService.deleteTodo(this.todos[id]._id).subscribe(res => {
+      // remove todo from state
+      this.todos = this.todos.filter((v, i) => i !== id);
+    });
+
+    
     
   }
 
   addTodo(): void {
     if (this.inputTodo == "") return; 
-    this.todos.push({content: this.inputTodo, completed: false, bg:this.images.pop()});
+
+    this.crudService.AddTodo({content: this.inputTodo, completed: false}).subscribe(res => {
+      console.log(res._id);
+      console.log(this.inputTodo);
+      this.todos.push({content: res.content, completed: false, bg:this.images.pop(), _id: res._id});
+      console.log(this.todos);
+    });
+    
+
     this.inputTodo = "";
   }
 }
