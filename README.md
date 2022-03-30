@@ -5,7 +5,7 @@ This is broken up into a few different sections:
 
 1. Frontend application using Angular 13.0.0
 2. MongoDB database from Dockerimage <version 5.0.6> and MongoExpress to be able to visualise the database
-3. Custom NodeJS REST API to handle traffic to database
+3. Custom NodeJS REST API to handle traffic to database (Found in folder API/)
 
 ## How to run
 
